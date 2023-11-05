@@ -7,6 +7,7 @@ import (
 func ProvideRouter(
 	r *gin.Engine,
 	orderHandler IOrderHandler,
+	reviewHandler IReviewHandler,
 
 ) {
 	// order service
@@ -17,4 +18,12 @@ func ProvideRouter(
 	r.DELETE("/order/:id", orderHandler.DeleteOrderByID)
 	r.GET("/order/byVendor/:vendorId", orderHandler.GetOrderByVendorID)
 	r.GET("/order/byUser/:userId", orderHandler.GetOrderByUserID)
+
+	// professor service
+	r.GET("/review/:id", reviewHandler.GetReviewByID)
+	r.GET("/review", reviewHandler.GetAllReviews)
+	r.GET("/review/byVendor/:vendorId", reviewHandler.GetReviewByVendorID)
+	r.POST("/review", reviewHandler.CreateReview)
+	r.PUT("/review/:id", reviewHandler.UpdateReviewByID)
+	r.DELETE("/review/:id", reviewHandler.DeleteReviewByID)
 }

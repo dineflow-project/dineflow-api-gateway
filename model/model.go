@@ -2,6 +2,8 @@ package model
 
 import (
 	"time"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type OrderMenu struct {
@@ -20,4 +22,17 @@ type Order struct {
 	UserId     string       `json:"user_id,omitempty"`
 	CreateAt   time.Time    `json:"created_at,omitempty"`
 	UpdatedAt  time.Time    `json:"updated_at,omitempty"`
+}
+
+type Review struct {
+	ID          primitive.ObjectID `json:"_id" bson:"_id"`
+	Score       float64            `json:"score"`
+	Description string             `json:"description"`
+	Timestamp   time.Time          `json:"timestamp,omitempty"`
+	Vendor_id   string             `json:"vendor_id" bson:"vendor_id"`
+	User_id     string             `json:"user_id"`
+}
+
+type ReviewResponseBody struct {
+	Data Review `json:"data"`
 }

@@ -15,6 +15,8 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 
 	gatewaygRPCClient "api-gateway/client_grpc"
+	restClient "api-gateway/client_rest"
+	"api-gateway/configs"
 	gatewayHTTPHandler "api-gateway/http_handler"
 	pb "api-gateway/pb"
 )
@@ -55,14 +57,17 @@ func main() {
 	// Dependency Injection
 	ordergRPCClient := gatewaygRPCClient.ProvideOrderClient(&ordergRPCClienter)
 	orderHandler := gatewayHTTPHandler.ProvideOrderHandler(ordergRPCClient)
+	reviewClientRest := restClient.ProvideReviewClientRest(&http.Client{})
+	reviewHandler := gatewayHTTPHandler.ProvideReviewHandler(reviewClientRest)
 
 	r.Use(cors.Default())
 	gatewayHTTPHandler.ProvideRouter(r,
 		orderHandler,
+		reviewHandler,
 	)
 
 	// r.Run(":" + viper.GetString("api-gateway.port"))
-	r.Run(":8000")
+	r.Run(":" + configs.EnvPort())
 }
 
 // Read Config file
