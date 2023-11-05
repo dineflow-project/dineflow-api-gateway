@@ -131,7 +131,7 @@ func (t *OrderClient) CreateOrder(ctx context.Context, order *model.Order) (*mod
 			Price:   orderMenu.Price,
 			Request: orderMenu.Request,
 		}
-		order.OrderMenus = append(order.OrderMenus, orderMenu)
+		newOrder.OrderMenus = append(newOrder.OrderMenus, orderMenu)
 	}
 	return newOrder, nil
 }
@@ -175,7 +175,7 @@ func (t *OrderClient) UpdateOrderByID(ctx context.Context, id string, order *mod
 			Price:   orderMenu.Price,
 			Request: orderMenu.Request,
 		}
-		order.OrderMenus = append(order.OrderMenus, orderMenu)
+		updatedOrder.OrderMenus = append(updatedOrder.OrderMenus, orderMenu)
 	}
 	return updatedOrder, nil
 }

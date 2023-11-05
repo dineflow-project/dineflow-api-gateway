@@ -5,7 +5,7 @@ import (
 )
 
 type OrderMenu struct {
-	MenuId  string  `json:"id"`
+	MenuId  string  `json:"menu_id"`
 	Amount  int     `json:"amount"`
 	Price   float32 `json:"price"`
 	Request string  `json:"request,omitempty"`
