@@ -52,3 +52,24 @@ type NotificationResponseBody struct {
 type ReviewResponseBody struct {
 	Data Review `json:"data"`
 }
+
+type User struct {
+	ID              primitive.ObjectID `json:"id,omitempty"`
+	Name            string             `json:"name,omitempty"`
+	Email           string             `json:"email"`
+	Password        string             `json:"password,omitempty"`
+	PasswordConfirm string             `json:"passwordConfirm,omitempty"`
+	Role            string             `json:"role,omitempty"`
+	CreatedAt       time.Time          `json:"created_at,omitempty"`
+	UpdatedAt       time.Time          `json:"updated_at,omitempty"`
+	Token           string             `json:"token,omitempty"`
+}
+
+type UserResponseBody struct {
+	Data struct {
+		User `json:"user"`
+	} `json:"data,omitempty"`
+	Status  string `json:"status,omitempty"`
+	Message string `json:"message,omitempty"`
+	Token   string `json:"access_token,omitempty"`
+}

@@ -8,6 +8,7 @@ func ProvideRouter(
 	r *gin.Engine,
 	orderHandler IOrderHandler,
 	reviewHandler IReviewHandler,
+	userHandler IUserHandler,
 	notificationHandler INotificationHandler,
 
 ) {
@@ -20,13 +21,19 @@ func ProvideRouter(
 	r.GET("/order/byVendor/:vendorId", orderHandler.GetOrderByVendorID)
 	r.GET("/order/byUser/:userId", orderHandler.GetOrderByUserID)
 
-	// professor service
+	// review service
 	r.GET("/review/:id", reviewHandler.GetReviewByID)
 	r.GET("/review", reviewHandler.GetAllReviews)
 	r.GET("/review/byVendor/:vendorId", reviewHandler.GetReviewByVendorID)
 	r.POST("/review", reviewHandler.CreateReview)
 	r.PUT("/review/:id", reviewHandler.UpdateReviewByID)
 	r.DELETE("/review/:id", reviewHandler.DeleteReviewByID)
+
+	// user service
+	r.GET("/users/me", userHandler.GetMe)
+	r.POST("/auth/login", userHandler.Login)
+	r.POST("/auth/register", userHandler.SignUp)
+
 
 	r.GET("/notification/:recipientID", notificationHandler.GetAllNotifiactions)
 	r.GET("/notification/unread/:recipientID", notificationHandler.GetUnreadNotification)
