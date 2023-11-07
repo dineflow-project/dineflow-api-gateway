@@ -59,11 +59,14 @@ func main() {
 	orderHandler := gatewayHTTPHandler.ProvideOrderHandler(ordergRPCClient)
 	reviewClientRest := restClient.ProvideReviewClientRest(&http.Client{})
 	reviewHandler := gatewayHTTPHandler.ProvideReviewHandler(reviewClientRest)
+	userClientRest := restClient.ProvideUserClientRest(&http.Client{})
+	userHandler := gatewayHTTPHandler.ProvideUserHandler(userClientRest)
 
 	r.Use(cors.Default())
 	gatewayHTTPHandler.ProvideRouter(r,
 		orderHandler,
 		reviewHandler,
+		userHandler,
 	)
 
 	// r.Run(":" + viper.GetString("api-gateway.port"))
