@@ -68,8 +68,8 @@ func main() {
 	gatewayHTTPHandler.ProvideRouter(r,
 		orderHandler,
 		reviewHandler,
-		notificationHandler,
 		userHandler,
+		notificationHandler,
 	)
 
 	// r.Run(":" + viper.GetString("api-gateway.port"))

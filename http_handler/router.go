@@ -34,7 +34,7 @@ func ProvideRouter(
 	r.POST("/auth/login", userHandler.Login)
 	r.POST("/auth/register", userHandler.SignUp)
 
-
+	// notification service
 	r.GET("/notification/:recipientID", notificationHandler.GetAllNotifiactions)
 	r.GET("/notification/unread/:recipientID", notificationHandler.GetUnreadNotification)
 
