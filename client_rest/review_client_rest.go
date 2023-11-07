@@ -99,13 +99,6 @@ func (s *ReviewClient) CreateReview(Review model.Review) error {
 	}
 	defer response.Body.Close()
 
-	// read response
-	// var resp model.Review
-	// err = json.NewDecoder(response.Body).Decode(&resp)
-	// if err != nil {
-	// 	return err
-	// }
-
 	return nil
 }
 
@@ -129,15 +122,6 @@ func (s *ReviewClient) UpdateReviewByID(id string, Review model.Review) error {
 		return err
 	}
 	defer response.Body.Close()
-
-	// var resp model.Review
-	// err = json.NewDecoder(response.Body).Decode(&resp)
-	// if err != nil {
-	// 	return err
-	// }
-	// if resp.Code != "200" {
-	// 	return model.Review{}, errors.New(resp.Error)
-	// }
 
 	return nil
 }
