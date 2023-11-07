@@ -63,7 +63,7 @@ func (s *ReviewClient) GetReviewByID(id string) (model.Review, error) {
 }
 
 func (s *ReviewClient) GetReviewByVendorID(vendorId string) ([]model.Review, error) {
-	path := configs.EnvHost() + ":" + configs.EnvReviewServicePort() + "/reviews?vendor_id=" + vendorId
+	path := configs.EnvHost() + ":" + configs.EnvReviewServicePort() + "/reviews/byVendor/" + vendorId
 	fmt.Println(path)
 	// send request
 	response, err := s.client.Get(path)
