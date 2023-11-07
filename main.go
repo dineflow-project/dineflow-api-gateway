@@ -63,6 +63,8 @@ func main() {
 	notificationHandler := gatewayHTTPHandler.ProvideNotificationHandler(notificationClientRest)
 	userClientRest := restClient.ProvideUserClientRest(&http.Client{})
 	userHandler := gatewayHTTPHandler.ProvideUserHandler(userClientRest)
+	menuClientRest := restClient.ProvideMenuClientRest(&http.Client{})
+	menuHandler := gatewayHTTPHandler.ProvideMenuHandler(menuClientRest)
 
 	r.Use(cors.Default())
 	gatewayHTTPHandler.ProvideRouter(r,
@@ -70,6 +72,7 @@ func main() {
 		reviewHandler,
 		userHandler,
 		notificationHandler,
+		menuHandler,
 	)
 
 	// r.Run(":" + viper.GetString("api-gateway.port"))

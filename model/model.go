@@ -1,6 +1,7 @@
 package model
 
 import (
+	"database/sql"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -72,4 +73,36 @@ type UserResponseBody struct {
 	Status  string `json:"status,omitempty"`
 	Message string `json:"message,omitempty"`
 	Token   string `json:"access_token,omitempty"`
+}
+
+type Menu struct {
+	ID          int     `json:"id"`
+	VendorID    int     `json:"vendor_id"`
+	Name        string  `json:"name"`
+	Price       float32 `json:"price"`
+	ImagePath   string  `json:"image_path"`
+	Description string  `json:"description"`
+	IsAvailable bool    `json:"is_available"`
+}
+
+type Status string
+
+const (
+	OPEN  Status = "Open"
+	CLOSE Status = "Close"
+)
+
+type Vendor struct {
+	ID               int          `json:"id"`
+	CanteenID        int          `json:"canteen_id"`
+	Name             string       `json:"name"`
+	OwnerID          sql.NullBool `json:"owner_id"`
+	OpeningTimestamp string       `json:"opening_timestamp"`
+	ClosingTimestamp string       `json:"closing_timestamp"`
+	Status           Status       `json:"status"`
+}
+
+type Canteen struct {
+	ID   int    `json:"id"`
+	Name string `json:"name"`
 }

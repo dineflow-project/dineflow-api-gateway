@@ -46,3 +46,8 @@ func EnvNotificationServicePort() string {
 	loadDotEnv()
 	return os.Getenv("REVIEW_NOTIFICATION_PORT")
 }
+
+func EnvMenuServicePort() string {
+	loadDotEnv()
+	return os.Getenv("ORDER_MENU_PORT")
+}

@@ -10,7 +10,7 @@ func ProvideRouter(
 	reviewHandler IReviewHandler,
 	userHandler IUserHandler,
 	notificationHandler INotificationHandler,
-
+	menuHandler IMenuHandler,
 ) {
 	// order service
 	r.GET("/order", orderHandler.GetAllOrders)
@@ -37,5 +37,28 @@ func ProvideRouter(
 	// notification service
 	r.GET("/notification/:recipientID", notificationHandler.GetAllNotifiactions)
 	r.GET("/notification/unread/:recipientID", notificationHandler.GetUnreadNotification)
+
+	//menu service
+	r.GET("/menu/:id", menuHandler.GetMenuByID)
+	r.GET("/menu", menuHandler.GetAllMenus)
+	r.GET("/menu/byVendor/:vendorId", menuHandler.GetMenuByVendorID)
+	r.POST("/menu", menuHandler.CreateMenu)
+	r.PUT("/menu/:id", menuHandler.UpdateMenuByID)
+	r.DELETE("/menu/:id", menuHandler.DeleteMenuByID)
+
+	// vendor
+	r.GET("/vendor/:id", menuHandler.GetVendorByID)
+	r.GET("/vendor", menuHandler.GetAllVendors)
+	r.GET("/vendor/canteen/:id", menuHandler.GetAllVendorsByCanteenID)
+	r.POST("/vendor", menuHandler.CreateVendor)
+	r.PUT("/vendor/:id", menuHandler.UpdateVendorByID)
+	r.DELETE("/vendor/:id", menuHandler.DeleteVendorByID)
+
+	// canteen
+	r.GET("/canteen/:id", menuHandler.GetCanteenByID)
+	r.GET("/canteen", menuHandler.GetAllCanteens)
+	r.POST("/canteen", menuHandler.CreateCanteen)
+	r.PUT("/canteen/:id", menuHandler.UpdateCanteenByID)
+	r.DELETE("/canteen/:id", menuHandler.DeleteCanteenByID)
 
 }
