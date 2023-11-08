@@ -60,11 +60,11 @@ func (h *MenuHandler) GetMenuByVendorID(c *gin.Context) {
 }
 
 func (h *MenuHandler) GetAllMenus(c *gin.Context) {
-	canteen := c.Query("canteen")
-	vendor := c.Query("vendor")
+	canteenId := c.Query("canteenId")
+	vendorId := c.Query("vendorId")
 	minprice := c.Query("minprice")
 	maxprice := c.Query("maxprice")
-	menus, err := h.menuClientRest.GetAllMenus(canteen, vendor, minprice, maxprice) // Method on your rest client
+	menus, err := h.menuClientRest.GetAllMenus(canteenId, vendorId, minprice, maxprice) // Method on your rest client
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "400", "error": err.Error()})
 		return
