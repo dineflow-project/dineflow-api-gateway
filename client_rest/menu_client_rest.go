@@ -42,11 +42,11 @@ type MenuClientRest interface {
 }
 
 // menu ---------------------------------------------------------------------------------------------------------------------------------------
-func (s *MenuClient) GetAllMenus(canteenName, vendorName, minprice, maxprice string) ([]model.Menu, error) {
+func (s *MenuClient) GetAllMenus(canteenId, vendorId, minprice, maxprice string) ([]model.Menu, error) {
 	// path := configs.EnvHost() + ":" + configs.EnvMenuServicePort() + "/menus" + "?canteen=" + canteenName + "&vendor=" + vendorName + "&minprice=" + minprice + "&maxprice=" + maxprice
 	queryParams := url.Values{}
-	queryParams.Set("canteen", canteenName)
-	queryParams.Set("vendor", vendorName)
+	queryParams.Set("canteenId", canteenId)
+	queryParams.Set("vendorId", vendorId)
 	queryParams.Set("minprice", minprice)
 	queryParams.Set("maxprice", maxprice)
 
