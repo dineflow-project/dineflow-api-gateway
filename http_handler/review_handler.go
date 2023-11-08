@@ -26,29 +26,29 @@ func (h *ReviewHandler) GetReviewByID(c *gin.Context) {
 	id := c.Param("id")
 	review, err := h.reviewClientRest.GetReviewByID(id) // Method on your rest client
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"code": "400", "error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": review})
+	c.JSON(http.StatusOK, gin.H{"code": "200", "data": review})
 }
 
 func (h *ReviewHandler) GetReviewByVendorID(c *gin.Context) {
 	vendor_id := c.Param("vendorId")
 	review, err := h.reviewClientRest.GetReviewByVendorID(vendor_id) // Method on your rest client
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"code": "400", "error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": review})
+	c.JSON(http.StatusOK, gin.H{"code": "200", "data": review})
 }
 
 func (h *ReviewHandler) GetAllReviews(c *gin.Context) {
 	reviews, err := h.reviewClientRest.GetAllReviews() // Method on your rest client
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"code": "400", "error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": reviews})
+	c.JSON(http.StatusOK, gin.H{"code": "200", "data": reviews})
 }
 
 func (h *ReviewHandler) CreateReview(c *gin.Context) {

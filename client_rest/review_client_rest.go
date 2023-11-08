@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 
 	"api-gateway/configs"
@@ -51,7 +52,15 @@ func (s *ReviewClient) GetReviewByID(id string) (model.Review, error) {
 		return model.Review{}, err
 	}
 	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		// Read the error response from the service
+		errorResponse, err := io.ReadAll(response.Body)
+		if err != nil {
+			return model.Review{}, fmt.Errorf("failed to read error response: %s", err.Error())
+		}
 
+		return model.Review{}, fmt.Errorf("HTTP Error: %s", string(errorResponse))
+	}
 	// read response
 	var resp model.Review
 	err = json.NewDecoder(response.Body).Decode(&resp)
@@ -71,7 +80,15 @@ func (s *ReviewClient) GetReviewByVendorID(vendorId string) ([]model.Review, err
 		return nil, err
 	}
 	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		// Read the error response from the service
+		errorResponse, err := io.ReadAll(response.Body)
+		if err != nil {
+			return nil, fmt.Errorf("failed to read error response: %s", err.Error())
+		}
 
+		return nil, fmt.Errorf("HTTP Error: %s", string(errorResponse))
+	}
 	// read response
 	var resp []model.Review
 	err = json.NewDecoder(response.Body).Decode(&resp)
@@ -122,7 +139,15 @@ func (s *ReviewClient) UpdateReviewByID(id string, Review model.Review) error {
 		return err
 	}
 	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		// Read the error response from the service
+		errorResponse, err := io.ReadAll(response.Body)
+		if err != nil {
+			return fmt.Errorf("failed to read error response: %s", err.Error())
+		}
 
+		return fmt.Errorf("HTTP Error: %s", string(errorResponse))
+	}
 	return nil
 }
 
@@ -139,7 +164,15 @@ func (s *ReviewClient) DeleteReviewByID(id string) error {
 		return err
 	}
 	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		// Read the error response from the service
+		errorResponse, err := io.ReadAll(response.Body)
+		if err != nil {
+			return fmt.Errorf("failed to read error response: %s", err.Error())
+		}
 
+		return fmt.Errorf("HTTP Error: %s", string(errorResponse))
+	}
 	return err
 }
 
