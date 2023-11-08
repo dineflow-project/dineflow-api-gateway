@@ -44,10 +44,10 @@ func EnvOrderServicePort() string {
 
 func EnvNotificationServicePort() string {
 	loadDotEnv()
-	return os.Getenv("REVIEW_NOTIFICATION_PORT")
+	return os.Getenv("NOTIFICATION_SERVICE_PORT")
 }
 
 func EnvMenuServicePort() string {
 	loadDotEnv()
-	return os.Getenv("ORDER_MENU_PORT")
+	return os.Getenv("MENU_SERVICE_PORT")
 }
