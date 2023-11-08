@@ -1,7 +1,6 @@
 package model
 
 import (
-	"database/sql"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -93,13 +92,13 @@ const (
 )
 
 type Vendor struct {
-	ID               int          `json:"id"`
-	CanteenID        int          `json:"canteen_id"`
-	Name             string       `json:"name"`
-	OwnerID          sql.NullBool `json:"owner_id"`
-	OpeningTimestamp string       `json:"opening_timestamp"`
-	ClosingTimestamp string       `json:"closing_timestamp"`
-	Status           Status       `json:"status"`
+	ID               int    `json:"id"`
+	CanteenID        int    `json:"canteen_id"`
+	Name             string `json:"name"`
+	OwnerID          string `json:"owner_id"`
+	OpeningTimestamp string `json:"opening_timestamp"`
+	ClosingTimestamp string `json:"closing_timestamp"`
+	Status           Status `json:"status"`
 }
 
 type Canteen struct {

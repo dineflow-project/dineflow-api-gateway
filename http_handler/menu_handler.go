@@ -43,20 +43,20 @@ func (h *MenuHandler) GetMenuByID(c *gin.Context) {
 	id := c.Param("id")
 	menu, err := h.menuClientRest.GetMenuByID(id) // Method on your rest client
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"code": "400", "error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": menu})
+	c.JSON(http.StatusOK, gin.H{"code": "200", "data": menu})
 }
 
 func (h *MenuHandler) GetMenuByVendorID(c *gin.Context) {
 	vendor_id := c.Param("vendorId")
 	menu, err := h.menuClientRest.GetMenuByVendorID(vendor_id) // Method on your rest client
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"code": "400", "error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": menu})
+	c.JSON(http.StatusOK, gin.H{"code": "200", "data": menu})
 }
 
 func (h *MenuHandler) GetAllMenus(c *gin.Context) {
@@ -66,10 +66,10 @@ func (h *MenuHandler) GetAllMenus(c *gin.Context) {
 	maxprice := c.Query("maxprice")
 	menus, err := h.menuClientRest.GetAllMenus(canteen, vendor, minprice, maxprice) // Method on your rest client
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"code": "400", "error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": menus})
+	c.JSON(http.StatusOK, gin.H{"code": "200", "data": menus})
 }
 
 func (h *MenuHandler) CreateMenu(c *gin.Context) {
@@ -140,29 +140,29 @@ func (h *MenuHandler) GetVendorByID(c *gin.Context) {
 	id := c.Param("id")
 	vendor, err := h.menuClientRest.GetVendorByID(id) // Method on your rest client
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"code": "400", "error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": vendor})
+	c.JSON(http.StatusOK, gin.H{"code": "200", "data": vendor})
 }
 
 func (h *MenuHandler) GetAllVendors(c *gin.Context) {
 	vendors, err := h.menuClientRest.GetAllVendors() // Method on your rest client
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"code": "400", "error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": vendors})
+	c.JSON(http.StatusOK, gin.H{"code": "200", "data": vendors})
 }
 
 func (h *MenuHandler) GetAllVendorsByCanteenID(c *gin.Context) {
 	id := c.Param("id")
 	vendors, err := h.menuClientRest.GetAllVendorsByCanteenID(id)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"code": "400", "error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": vendors})
+	c.JSON(http.StatusOK, gin.H{"code": "200", "data": vendors})
 }
 
 func (h *MenuHandler) CreateVendor(c *gin.Context) {
@@ -233,19 +233,19 @@ func (h *MenuHandler) GetCanteenByID(c *gin.Context) {
 	id := c.Param("id")
 	vendor, err := h.menuClientRest.GetCanteenByID(id) // Method on your rest client
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"code": "400", "error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": vendor})
+	c.JSON(http.StatusOK, gin.H{"code": "200", "data": vendor})
 }
 
 func (h *MenuHandler) GetAllCanteens(c *gin.Context) {
 	vendors, err := h.menuClientRest.GetAllCanteens() // Method on your rest client
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"code": "400", "error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": vendors})
+	c.JSON(http.StatusOK, gin.H{"code": "200", "data": vendors})
 }
 
 func (h *MenuHandler) CreateCanteen(c *gin.Context) {

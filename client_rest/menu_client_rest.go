@@ -78,7 +78,15 @@ func (s *MenuClient) GetMenuByID(id string) (model.Menu, error) {
 		return model.Menu{}, err
 	}
 	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		// Read the error response from the service
+		errorResponse, err := io.ReadAll(response.Body)
+		if err != nil {
+			return model.Menu{}, fmt.Errorf("failed to read error response: %s", err.Error())
+		}
 
+		return model.Menu{}, fmt.Errorf("HTTP Error: %s", string(errorResponse))
+	}
 	// read response
 	var resp model.Menu
 	err = json.NewDecoder(response.Body).Decode(&resp)
@@ -98,7 +106,15 @@ func (s *MenuClient) GetMenuByVendorID(vendorId string) ([]model.Menu, error) {
 		return nil, err
 	}
 	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		// Read the error response from the service
+		errorResponse, err := io.ReadAll(response.Body)
+		if err != nil {
+			return nil, fmt.Errorf("failed to read error response: %s", err.Error())
+		}
 
+		return nil, fmt.Errorf("HTTP Error: %s", string(errorResponse))
+	}
 	// read response
 	var resp []model.Menu
 	err = json.NewDecoder(response.Body).Decode(&resp)
@@ -159,7 +175,15 @@ func (s *MenuClient) UpdateMenuByID(id string, Menu model.Menu) error {
 		return err
 	}
 	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		// Read the error response from the service
+		errorResponse, err := io.ReadAll(response.Body)
+		if err != nil {
+			return fmt.Errorf("failed to read error response: %s", err.Error())
+		}
 
+		return fmt.Errorf("HTTP Error: %s", string(errorResponse))
+	}
 	return nil
 }
 
@@ -176,7 +200,15 @@ func (s *MenuClient) DeleteMenuByID(id string) error {
 		return err
 	}
 	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		// Read the error response from the service
+		errorResponse, err := io.ReadAll(response.Body)
+		if err != nil {
+			return fmt.Errorf("failed to read error response: %s", err.Error())
+		}
 
+		return fmt.Errorf("HTTP Error: %s", string(errorResponse))
+	}
 	return err
 }
 
@@ -205,12 +237,30 @@ func (s *MenuClient) GetVendorByID(id string) (model.Vendor, error) {
 	fmt.Println(path)
 	// send request
 	response, err := s.client.Get(path)
+	fmt.Println(err)
 	if err != nil {
 		return model.Vendor{}, err
 	}
 	defer response.Body.Close()
 
+	// print response body
+	// bodyBytes, err := ioutil.ReadAll(response.Body)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// fmt.Println(string(bodyBytes))
+	if response.StatusCode != http.StatusOK {
+		// Read the error response from the service
+		errorResponse, err := io.ReadAll(response.Body)
+		if err != nil {
+			return model.Vendor{}, fmt.Errorf("failed to read error response: %s", err.Error())
+		}
+
+		return model.Vendor{}, fmt.Errorf("HTTP Error: %s", string(errorResponse))
+	}
+
 	// read response
+
 	var resp model.Vendor
 	err = json.NewDecoder(response.Body).Decode(&resp)
 
@@ -229,6 +279,16 @@ func (s *MenuClient) GetAllVendorsByCanteenID(id string) ([]model.Vendor, error)
 		return nil, err
 	}
 	defer response.Body.Close()
+
+	if response.StatusCode != http.StatusOK {
+		// Read the error response from the service
+		errorResponse, err := io.ReadAll(response.Body)
+		if err != nil {
+			return nil, fmt.Errorf("failed to read error response: %s", err.Error())
+		}
+
+		return nil, fmt.Errorf("HTTP Error: %s", string(errorResponse))
+	}
 
 	// read response
 	var resp []model.Vendor
@@ -280,7 +340,15 @@ func (s *MenuClient) UpdateVendorByID(id string, Vendor model.Vendor) error {
 		return err
 	}
 	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		// Read the error response from the service
+		errorResponse, err := io.ReadAll(response.Body)
+		if err != nil {
+			return fmt.Errorf("failed to read error response: %s", err.Error())
+		}
 
+		return fmt.Errorf("HTTP Error: %s", string(errorResponse))
+	}
 	return nil
 }
 
@@ -297,7 +365,15 @@ func (s *MenuClient) DeleteVendorByID(id string) error {
 		return err
 	}
 	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		// Read the error response from the service
+		errorResponse, err := io.ReadAll(response.Body)
+		if err != nil {
+			return fmt.Errorf("failed to read error response: %s", err.Error())
+		}
 
+		return fmt.Errorf("HTTP Error: %s", string(errorResponse))
+	}
 	return err
 }
 
@@ -392,7 +468,15 @@ func (s *MenuClient) UpdateCanteenByID(id string, Canteen model.Canteen) error {
 		return err
 	}
 	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		// Read the error response from the service
+		errorResponse, err := io.ReadAll(response.Body)
+		if err != nil {
+			return fmt.Errorf("failed to read error response: %s", err.Error())
+		}
 
+		return fmt.Errorf("HTTP Error: %s", string(errorResponse))
+	}
 	return nil
 }
 
@@ -409,7 +493,15 @@ func (s *MenuClient) DeleteCanteenByID(id string) error {
 		return err
 	}
 	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		// Read the error response from the service
+		errorResponse, err := io.ReadAll(response.Body)
+		if err != nil {
+			return fmt.Errorf("failed to read error response: %s", err.Error())
+		}
 
+		return fmt.Errorf("HTTP Error: %s", string(errorResponse))
+	}
 	return err
 }
 
