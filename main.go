@@ -93,7 +93,7 @@ func main() {
 
 func initOrdergRPCConnection() *grpc.ClientConn {
 	// dest := fmt.Sprintf("%s:%s", viper.GetString("order-service.grpc-host"), viper.GetString("order-service.grpc-port"))
-	dest := "localhost:8080"
+	dest := fmt.Sprintf("localhost:%s", configs.EnvOrderServicePort())
 	// Set up a connection to the server.
 	conn, err := grpc.Dial(dest, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
