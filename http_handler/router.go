@@ -1,8 +1,8 @@
 package http_handler
 
 import (
-	"api-gateway/middleware"
-	"api-gateway/services"
+	"dineflow-api-gateway/middleware"
+	"dineflow-api-gateway/services"
 
 	"github.com/gin-gonic/gin"
 )

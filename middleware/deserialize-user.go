@@ -1,10 +1,10 @@
 package middleware
 
 import (
-	"api-gateway/configs"
-	"api-gateway/model"
-	"api-gateway/services"
-	"api-gateway/utils"
+	"dineflow-api-gateway/configs"
+	"dineflow-api-gateway/model"
+	"dineflow-api-gateway/services"
+	"dineflow-api-gateway/utils"
 	"fmt"
 	"net/http"
 	"strings"

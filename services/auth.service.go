@@ -1,7 +1,7 @@
 package services
 
 import (
-	"api-gateway/model"
+	"dineflow-api-gateway/model"
 )
 
 type AuthService interface {

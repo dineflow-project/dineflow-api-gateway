@@ -18,14 +18,14 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
-	gatewaygRPCClient "api-gateway/client_grpc"
-	restClient "api-gateway/client_rest"
-	"api-gateway/configs"
-	"api-gateway/controllers"
-	gatewayHTTPHandler "api-gateway/http_handler"
-	pb "api-gateway/pb"
-	"api-gateway/routes"
-	"api-gateway/services"
+	gatewaygRPCClient "dineflow-api-gateway/client_grpc"
+	restClient "dineflow-api-gateway/client_rest"
+	"dineflow-api-gateway/configs"
+	"dineflow-api-gateway/controllers"
+	gatewayHTTPHandler "dineflow-api-gateway/http_handler"
+	pb "dineflow-api-gateway/pb"
+	"dineflow-api-gateway/routes"
+	"dineflow-api-gateway/services"
 )
 
 var (

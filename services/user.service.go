@@ -1,6 +1,6 @@
 package services
 
-import "api-gateway/model"
+import "dineflow-api-gateway/model"
 
 type UserService interface {
 	FindUserById(string) (*model.DBResponse, error)

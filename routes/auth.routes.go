@@ -1,9 +1,9 @@
 package routes
 
 import (
-	"api-gateway/controllers"
-	"api-gateway/middleware"
-	"api-gateway/services"
+	"dineflow-api-gateway/controllers"
+	"dineflow-api-gateway/middleware"
+	"dineflow-api-gateway/services"
 
 	"github.com/gin-gonic/gin"
 )

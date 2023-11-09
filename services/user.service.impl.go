@@ -1,8 +1,8 @@
 package services
 
 import (
-	"api-gateway/model"
 	"context"
+	"dineflow-api-gateway/model"
 	"strings"
 
 	"go.mongodb.org/mongo-driver/bson"

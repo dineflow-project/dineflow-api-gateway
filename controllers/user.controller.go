@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"api-gateway/model"
-	"api-gateway/services"
+	"dineflow-api-gateway/model"
+	"dineflow-api-gateway/services"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

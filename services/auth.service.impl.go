@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
-	"api-gateway/model"
-	"api-gateway/utils"
+	"dineflow-api-gateway/model"
+	"dineflow-api-gateway/utils"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
