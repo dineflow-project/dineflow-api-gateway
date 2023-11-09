@@ -26,6 +26,7 @@ func ProvideRouter(
 
 	// review service
 	r.GET("/review/:id", reviewHandler.GetReviewByID)
+	r.GET("/review/avgScore/:vendorId", reviewHandler.GetAvgReviewScoreByVendorID)
 	r.GET("/review", reviewHandler.GetAllReviews)
 	r.GET("/review/byVendor/:vendorId", reviewHandler.GetReviewByVendorID)
 	r.POST("/review", middleware.DeserializeUser(userService), middleware.Authorize("user"), reviewHandler.CreateReview)

@@ -19,6 +19,7 @@ type ReviewClientRest interface {
 	GetAllReviews() ([]model.Review, error)
 	GetReviewByID(id string) (model.Review, error)
 	GetReviewByVendorID(vendor_id string) ([]model.Review, error)
+	GetAvgReviewScoreByVendorID(vendor_id string) (float64, error)
 	CreateReview(review model.Review) error
 	UpdateReviewByID(id string, Review model.Review) error
 	DeleteReviewByID(id string) error
@@ -45,7 +46,6 @@ func (s *ReviewClient) GetAllReviews() ([]model.Review, error) {
 
 func (s *ReviewClient) GetReviewByID(id string) (model.Review, error) {
 	path := configs.EnvReviewServiceHost() + ":" + configs.EnvReviewServicePort() + "/reviews/" + id
-	fmt.Println(path)
 	// send request
 	response, err := s.client.Get(path)
 	if err != nil {
@@ -73,7 +73,6 @@ func (s *ReviewClient) GetReviewByID(id string) (model.Review, error) {
 
 func (s *ReviewClient) GetReviewByVendorID(vendorId string) ([]model.Review, error) {
 	path := configs.EnvReviewServiceHost() + ":" + configs.EnvReviewServicePort() + "/reviews/byVendor/" + vendorId
-	fmt.Println(path)
 	// send request
 	response, err := s.client.Get(path)
 	if err != nil {
@@ -95,6 +94,33 @@ func (s *ReviewClient) GetReviewByVendorID(vendorId string) ([]model.Review, err
 
 	if err != nil {
 		return nil, err
+	}
+	return resp, nil
+}
+
+func (s *ReviewClient) GetAvgReviewScoreByVendorID(vendorId string) (float64, error) {
+	path := configs.EnvReviewServiceHost() + ":" + configs.EnvReviewServicePort() + "/reviews/avgScore/" + vendorId
+	// send request
+	response, err := s.client.Get(path)
+	if err != nil {
+		return -1, err
+	}
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		// Read the error response from the service
+		errorResponse, err := io.ReadAll(response.Body)
+		if err != nil {
+			return -1, fmt.Errorf("failed to read error response: %s", err.Error())
+		}
+
+		return -1, fmt.Errorf("HTTP Error: %s", string(errorResponse))
+	}
+	// read response
+	var resp float64
+	err = json.NewDecoder(response.Body).Decode(&resp)
+
+	if err != nil {
+		return -1, err
 	}
 	return resp, nil
 }

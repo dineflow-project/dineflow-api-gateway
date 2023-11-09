@@ -17,6 +17,7 @@ type IReviewHandler interface {
 	GetReviewByID(c *gin.Context)
 	GetAllReviews(c *gin.Context)
 	GetReviewByVendorID(c *gin.Context)
+	GetAvgReviewScoreByVendorID(c *gin.Context)
 	CreateReview(c *gin.Context)
 	UpdateReviewByID(c *gin.Context)
 	DeleteReviewByID(c *gin.Context)
@@ -35,6 +36,16 @@ func (h *ReviewHandler) GetReviewByID(c *gin.Context) {
 func (h *ReviewHandler) GetReviewByVendorID(c *gin.Context) {
 	vendor_id := c.Param("vendorId")
 	review, err := h.reviewClientRest.GetReviewByVendorID(vendor_id) // Method on your rest client
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"code": "400", "error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"code": "200", "data": review})
+}
+
+func (h *ReviewHandler) GetAvgReviewScoreByVendorID(c *gin.Context) {
+	vendor_id := c.Param("vendorId")
+	review, err := h.reviewClientRest.GetAvgReviewScoreByVendorID(vendor_id) // Method on your rest client
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "400", "error": err.Error()})
 		return
