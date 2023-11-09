@@ -95,7 +95,7 @@ func main() {
 	defer mongoclient.Disconnect(ctx)
 
 	corsConfig := cors.DefaultConfig()
-	corsConfig.AllowOrigins = []string{"http://localhost:" + configs.EnvServicePort()}
+	corsConfig.AllowOrigins = []string{configs.EnvHost() + ":" + configs.EnvServicePort(), configs.EnvHost() + ":" + configs.EnvFrontendPort()}
 	corsConfig.AllowCredentials = true
 
 	server.Use(cors.New(corsConfig))
@@ -136,7 +136,6 @@ func main() {
 	log.Fatal(server.Run(":" + configs.EnvPort()))
 }
 func initOrdergRPCConnection() *grpc.ClientConn {
-	// dest := fmt.Sprintf("%s:%s", viper.GetString("order-service.grpc-host"), viper.GetString("order-service.grpc-port"))
 	dest := fmt.Sprintf(configs.EnvOrderServiceHost()+":%s", configs.EnvOrderServicePort())
 	// Set up a connection to the server.
 	conn, err := grpc.Dial(dest, grpc.WithTransportCredentials(insecure.NewCredentials()))

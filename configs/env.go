@@ -69,6 +69,12 @@ func EnvServicePort() string {
 	loadDotEnv()
 	return os.Getenv("PORT")
 }
+
+func EnvFrontendPort() string {
+	loadDotEnv()
+	return os.Getenv("FRONTEND_PORT")
+}
+
 func EnvAccessTokenPK() string {
 	loadDotEnv()
 	return os.Getenv("ACCESS_TOKEN_PRIVATE_KEY")
