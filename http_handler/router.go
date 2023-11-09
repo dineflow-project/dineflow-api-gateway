@@ -46,6 +46,7 @@ func ProvideRouter(
 
 	// vendor
 	r.GET("/vendor/:id", menuHandler.GetVendorByID)
+	r.GET("/vendor/byOwner/:id", menuHandler.GetVendorByOwnerID)
 	r.GET("/vendor", menuHandler.GetAllVendors)
 	r.GET("/vendor/canteen/:id", menuHandler.GetAllVendorsByCanteenID)
 	r.POST("/vendor", menuHandler.CreateVendor)

@@ -28,6 +28,7 @@ type MenuClientRest interface {
 	//vendor
 	GetAllVendors() ([]model.Vendor, error)
 	GetVendorByID(id string) (model.Vendor, error)
+	GetVendorByOwnerID(id string) (model.Vendor, error)
 	GetAllVendorsByCanteenID(id string) ([]model.Vendor, error)
 	CreateVendor(menu model.Vendor) error
 	UpdateVendorByID(id string, Vendor model.Vendor) error
@@ -249,6 +250,38 @@ func (s *MenuClient) GetVendorByID(id string) (model.Vendor, error) {
 	// 	log.Fatal(err)
 	// }
 	// fmt.Println(string(bodyBytes))
+	if response.StatusCode != http.StatusOK {
+		// Read the error response from the service
+		errorResponse, err := io.ReadAll(response.Body)
+		if err != nil {
+			return model.Vendor{}, fmt.Errorf("failed to read error response: %s", err.Error())
+		}
+
+		return model.Vendor{}, fmt.Errorf("HTTP Error: %s", string(errorResponse))
+	}
+
+	// read response
+
+	var resp model.Vendor
+	err = json.NewDecoder(response.Body).Decode(&resp)
+
+	if err != nil {
+		return model.Vendor{}, err
+	}
+	return resp, nil
+}
+
+func (s *MenuClient) GetVendorByOwnerID(id string) (model.Vendor, error) {
+	path := configs.EnvMenuServiceHost() + ":" + configs.EnvMenuServicePort() + "/vendors/byOwner/" + id
+	fmt.Println(path)
+	// send request
+	response, err := s.client.Get(path)
+	fmt.Println(err)
+	if err != nil {
+		return model.Vendor{}, err
+	}
+	defer response.Body.Close()
+
 	if response.StatusCode != http.StatusOK {
 		// Read the error response from the service
 		errorResponse, err := io.ReadAll(response.Body)

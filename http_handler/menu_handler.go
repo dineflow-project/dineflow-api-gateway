@@ -24,6 +24,7 @@ type IMenuHandler interface {
 
 	//vendor
 	GetVendorByID(c *gin.Context)
+	GetVendorByOwnerID(c *gin.Context)
 	GetAllVendors(c *gin.Context)
 	GetAllVendorsByCanteenID(c *gin.Context)
 	CreateVendor(c *gin.Context)
@@ -139,6 +140,16 @@ func (h *MenuHandler) DeleteMenuByID(c *gin.Context) {
 func (h *MenuHandler) GetVendorByID(c *gin.Context) {
 	id := c.Param("id")
 	vendor, err := h.menuClientRest.GetVendorByID(id) // Method on your rest client
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"code": "400", "error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"code": "200", "data": vendor})
+}
+
+func (h *MenuHandler) GetVendorByOwnerID(c *gin.Context) {
+	id := c.Param("id")
+	vendor, err := h.menuClientRest.GetVendorByOwnerID(id) // Method on your rest client
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "400", "error": err.Error()})
 		return
