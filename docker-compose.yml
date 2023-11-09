@@ -1,35 +1,32 @@
 version: "3.7"
 
 services:
-#   api:
-#     container_name: "user_services_api"
-#     build:
-#       context: .
-#       dockerfile: ./api.Dockerfile
-#     ports:
-#       - "8092:8092"
-#     networks:
-#       - user_network
-#     env_file:
-#       - ./.env
-
-  db:
-    container_name: "user_services_db"
-    platform: linux/x86_64
-    image: mongo:4.4.6
-    networks:
-      - user_network
-    restart: always
+  api-gateway:
+    container_name: api-gateway
+    build:
+      context: .
+      dockerfile: api.Dockerfile
     ports:
-      # <Port exposed> : < Mongo Port running inside container>
-      - "27018:27017"
+      - "8000:8000"
+    networks:
+      - api-gateway_network
     env_file:
       - ./.env
 
+  user_db:
+    container_name: "user_service_db"
+    image: mongo
+    networks:
+      - api-gateway_network
+    restart: on-failure
+    ports:
+      - "27018:27017"
+    env_file:
+      - ./.env
     volumes:
-      - database:/data/db
+      - user_database:/data/db
 
 networks:
-  user_network:
+  api-gateway_network:
 volumes:
-  database:
+  user_database:
