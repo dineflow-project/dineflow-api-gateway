@@ -1,8 +1,8 @@
 package http_handler
 
 import (
-	grpcClient "api-gateway/client_grpc"
-	"api-gateway/model"
+	grpcClient "dineflow-api-gateway/client_grpc"
+	"dineflow-api-gateway/model"
 
 	"github.com/gin-gonic/gin"
 )

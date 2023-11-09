@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"net/url"
 
-	"api-gateway/configs"
-	"api-gateway/model"
+	"dineflow-api-gateway/configs"
+	"dineflow-api-gateway/model"
 )
 
 type MenuClient struct {

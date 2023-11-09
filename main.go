@@ -14,11 +14,11 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
-	gatewaygRPCClient "api-gateway/client_grpc"
-	restClient "api-gateway/client_rest"
-	"api-gateway/configs"
-	gatewayHTTPHandler "api-gateway/http_handler"
-	pb "api-gateway/pb"
+	gatewaygRPCClient "dineflow-api-gateway/client_grpc"
+	restClient "dineflow-api-gateway/client_rest"
+	"dineflow-api-gateway/configs"
+	gatewayHTTPHandler "dineflow-api-gateway/http_handler"
+	pb "dineflow-api-gateway/pb"
 )
 
 func CORSMiddleware() gin.HandlerFunc {

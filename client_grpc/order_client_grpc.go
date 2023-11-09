@@ -5,8 +5,8 @@ import (
 	"io"
 	"log"
 
-	"api-gateway/model"
-	pb "api-gateway/pb"
+	"dineflow-api-gateway/model"
+	pb "dineflow-api-gateway/pb"
 )
 
 type OrderClient struct {

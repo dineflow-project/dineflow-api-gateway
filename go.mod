@@ -1,4 +1,4 @@
-module api-gateway
+module dineflow-api-gateway
 
 go 1.21.1
 

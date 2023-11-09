@@ -7,8 +7,8 @@ import (
 	"io"
 	"net/http"
 
-	"api-gateway/configs"
-	"api-gateway/model"
+	"dineflow-api-gateway/configs"
+	"dineflow-api-gateway/model"
 )
 
 type ReviewClient struct {

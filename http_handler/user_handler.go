@@ -3,9 +3,9 @@ package http_handler
 import (
 	"net/http"
 
-	restClient "api-gateway/client_rest"
+	restClient "dineflow-api-gateway/client_rest"
 
-	"api-gateway/model"
+	"dineflow-api-gateway/model"
 
 	"github.com/gin-gonic/gin"
 )
