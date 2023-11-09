@@ -10,7 +10,6 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -94,11 +93,7 @@ func init() {
 func main() {
 	defer mongoclient.Disconnect(ctx)
 
-	corsConfig := cors.DefaultConfig()
-	corsConfig.AllowOrigins = []string{configs.EnvHost() + ":" + configs.EnvServicePort(), configs.EnvHost() + ":" + configs.EnvFrontendPort()}
-	corsConfig.AllowCredentials = true
-
-	server.Use(cors.New(corsConfig))
+	server.Use(CORSMiddleware())
 
 	// Use the main engine instance directly
 	router := server.Group("/api")
