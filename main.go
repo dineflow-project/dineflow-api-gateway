@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
 	"log"
@@ -11,14 +12,35 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/mongo/readpref"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
 	gatewaygRPCClient "api-gateway/client_grpc"
 	restClient "api-gateway/client_rest"
 	"api-gateway/configs"
+	"api-gateway/controllers"
 	gatewayHTTPHandler "api-gateway/http_handler"
 	pb "api-gateway/pb"
+	"api-gateway/routes"
+	"api-gateway/services"
+)
+
+var (
+	server      *gin.Engine
+	ctx         context.Context
+	mongoclient *mongo.Client
+
+	userService         services.UserService
+	UserController      controllers.UserController
+	UserRouteController routes.UserRouteController
+
+	authCollection      *mongo.Collection
+	authService         services.AuthService
+	AuthController      controllers.AuthController
+	AuthRouteController routes.AuthRouteController
 )
 
 func CORSMiddleware() gin.HandlerFunc {
@@ -39,19 +61,57 @@ func CORSMiddleware() gin.HandlerFunc {
 	}
 }
 
+func init() {
+	ctx = context.TODO()
+
+	// Connect to MongoDB
+	mongoconn := options.Client().ApplyURI(configs.EnvMongoURI())
+	mongoclient, err := mongo.Connect(ctx, mongoconn)
+
+	if err != nil {
+		panic(err)
+	}
+
+	if err := mongoclient.Ping(ctx, readpref.Primary()); err != nil {
+		panic(err)
+	}
+
+	fmt.Println("MongoDB successfully connected...")
+
+	// Collections
+	authCollection = mongoclient.Database("user_db").Collection("users")
+	userService = services.NewUserServiceImpl(authCollection, ctx)
+	authService = services.NewAuthService(authCollection, ctx)
+	AuthController = controllers.NewAuthController(authService, userService, ctx, authCollection)
+	AuthRouteController = routes.NewAuthRouteController(AuthController)
+
+	UserController = controllers.NewUserController(userService)
+	UserRouteController = routes.NewRouteUserController(UserController)
+
+	server = gin.Default()
+}
+
 func main() {
+	defer mongoclient.Disconnect(ctx)
+
+	corsConfig := cors.DefaultConfig()
+	corsConfig.AllowOrigins = []string{"http://localhost:" + configs.EnvServicePort()}
+	corsConfig.AllowCredentials = true
+
+	server.Use(cors.New(corsConfig))
+
+	// Use the main engine instance directly
+	router := server.Group("/api")
+
+	AuthRouteController.AuthRoute(router, userService)
+	UserRouteController.UserRoute(router, userService)
+
 	flag.Parse()
-
 	defer gracefulShutdown()
-
-	// initConfig()
-
-	r := gin.Default()
 
 	// Initialize gRPC connections
 	ordergRPCConn := initOrdergRPCConnection()
 	ordergRPCClienter := pb.NewOrderServiceClient(ordergRPCConn)
-
 	defer ordergRPCConn.Close()
 
 	// Dependency Injection
@@ -61,40 +121,22 @@ func main() {
 	reviewHandler := gatewayHTTPHandler.ProvideReviewHandler(reviewClientRest)
 	notificationClientRest := restClient.ProvideNotificationClientRest(&http.Client{})
 	notificationHandler := gatewayHTTPHandler.ProvideNotificationHandler(notificationClientRest)
-	userClientRest := restClient.ProvideUserClientRest(&http.Client{})
-	userHandler := gatewayHTTPHandler.ProvideUserHandler(userClientRest)
 	menuClientRest := restClient.ProvideMenuClientRest(&http.Client{})
 	menuHandler := gatewayHTTPHandler.ProvideMenuHandler(menuClientRest)
 
-	r.Use(cors.Default())
-	gatewayHTTPHandler.ProvideRouter(r,
+	// Use the main engine instance directly
+	gatewayHTTPHandler.ProvideRouter(server,
+		userService,
 		orderHandler,
 		reviewHandler,
-		userHandler,
 		notificationHandler,
 		menuHandler,
 	)
 
-	// r.Run(":" + viper.GetString("api-gateway.port"))
-	r.Run(":" + configs.EnvPort())
+	log.Fatal(server.Run(":" + configs.EnvPort()))
 }
-
-// Read Config file
-// func initConfig() {
-// 	viper.SetConfigName("config")
-// 	viper.AddConfigPath("./config")
-// 	viper.SetConfigType("yaml")
-
-// 	err := viper.ReadInConfig()
-// 	if err != nil {
-// 		panic(fmt.Errorf("fatal error config file: %s", err))
-// 	}
-// }
-
 func initOrdergRPCConnection() *grpc.ClientConn {
-	// dest := fmt.Sprintf("%s:%s", viper.GetString("order-service.grpc-host"), viper.GetString("order-service.grpc-port"))
 	dest := fmt.Sprintf("localhost:%s", configs.EnvOrderServicePort())
-	// Set up a connection to the server.
 	conn, err := grpc.Dial(dest, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)

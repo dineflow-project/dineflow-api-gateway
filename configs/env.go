@@ -1,8 +1,11 @@
 package configs
 
 import (
+	"fmt"
 	"log"
 	"os"
+	"strconv"
+	"time"
 
 	"github.com/joho/godotenv"
 )
@@ -50,4 +53,51 @@ func EnvNotificationServicePort() string {
 func EnvMenuServicePort() string {
 	loadDotEnv()
 	return os.Getenv("MENU_SERVICE_PORT")
+}
+
+func EnvMongoURI() string {
+	loadDotEnv()
+	return os.Getenv("MONGO_URI")
+}
+
+func EnvMongoDBName() string {
+	loadDotEnv()
+	return os.Getenv("MONGO_DATABASE_NAME")
+}
+
+func EnvServicePort() string {
+	loadDotEnv()
+	return os.Getenv("PORT")
+}
+func EnvAccessTokenPK() string {
+	loadDotEnv()
+	return os.Getenv("ACCESS_TOKEN_PRIVATE_KEY")
+}
+func EnvAccessTokenPublicK() string {
+	loadDotEnv()
+	return os.Getenv("ACCESS_TOKEN_PUBLIC_KEY")
+}
+func EnvAccessTokenMaxAge() int {
+	loadDotEnv()
+	maxAgeStr := os.Getenv("ACCESS_TOKEN_MAXAGE")
+	maxAge, err := strconv.Atoi(maxAgeStr)
+	if err != nil {
+		return 0 // Default value
+	}
+	return maxAge
+}
+func EnvAccessTokenExpire() time.Duration {
+	loadDotEnv()
+	expireStr := os.Getenv("ACCESS_TOKEN_EXPIRED_IN")
+	if expireStr == "" {
+		return 0 // Return zero duration if the environment variable is not set
+	}
+
+	duration, err := time.ParseDuration(expireStr)
+	if err != nil {
+		fmt.Println("Error parsing duration")
+		return 0 // Return an error if parsing fails
+	}
+
+	return duration
 }

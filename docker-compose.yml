@@ -1,0 +1,35 @@
+version: "3.7"
+
+services:
+#   api:
+#     container_name: "user_services_api"
+#     build:
+#       context: .
+#       dockerfile: ./api.Dockerfile
+#     ports:
+#       - "8092:8092"
+#     networks:
+#       - user_network
+#     env_file:
+#       - ./.env
+
+  db:
+    container_name: "user_services_db"
+    platform: linux/x86_64
+    image: mongo:4.4.6
+    networks:
+      - user_network
+    restart: always
+    ports:
+      # <Port exposed> : < Mongo Port running inside container>
+      - "27018:27017"
+    env_file:
+      - ./.env
+
+    volumes:
+      - database:/data/db
+
+networks:
+  user_network:
+volumes:
+  database:
