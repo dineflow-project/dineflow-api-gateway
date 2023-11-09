@@ -61,6 +61,10 @@ func (h *OrderHandler) CreateOrder(c *gin.Context) {
 		})
 		return
 	}
+
+	//attach user id that logged in
+	order.UserId = c.MustGet("currentUser").(*model.DBResponse).ID.Hex()
+
 	createdOrder, err := h.orderClientgRPC.CreateOrder(c, &order)
 	if err != nil {
 		c.JSON(200, gin.H{

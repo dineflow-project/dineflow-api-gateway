@@ -60,6 +60,10 @@ func (h *ReviewHandler) CreateReview(c *gin.Context) {
 		})
 		return
 	}
+
+	//attach user id that logged in
+	params.User_id = c.MustGet("currentUser").(*model.DBResponse).ID.Hex()
+
 	err := h.reviewClientRest.CreateReview(params)
 	if err != nil {
 		c.JSON(200, gin.H{

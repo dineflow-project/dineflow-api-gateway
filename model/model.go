@@ -30,7 +30,7 @@ type Review struct {
 	Description string             `json:"description"`
 	Timestamp   time.Time          `json:"timestamp,omitempty"`
 	Vendor_id   string             `json:"vendor_id" bson:"vendor_id"`
-	User_id     string             `json:"user_id"`
+	User_id     string             `json:"user_id,omitempty"`
 }
 
 type Notification struct {
