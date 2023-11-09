@@ -19,7 +19,7 @@ type NotificationClientRest interface {
 }
 
 func (s *NotificationClient) GetUnreadNotification(recipientID string) (model.UnreadNotificationResponseBody, error) {
-	path := configs.EnvHost() + ":" + configs.EnvNotificationServicePort() + "/notifications/unread/" + recipientID
+	path := configs.EnvNotificationServiceHost() + ":" + configs.EnvNotificationServicePort() + "/notifications/unread/" + recipientID
 	fmt.Println(path)
 
 	// send request
@@ -39,7 +39,7 @@ func (s *NotificationClient) GetUnreadNotification(recipientID string) (model.Un
 }
 
 func (s *NotificationClient) GetAllNotifiactions(recipientID string) ([]model.Notification, error) {
-	path := configs.EnvHost() + ":" + configs.EnvNotificationServicePort() + "/notifications/" + recipientID
+	path := configs.EnvNotificationServiceHost() + ":" + configs.EnvNotificationServicePort() + "/notifications/" + recipientID
 
 	// send request
 	response, err := s.client.Get(path)

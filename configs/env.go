@@ -51,3 +51,28 @@ func EnvMenuServicePort() string {
 	loadDotEnv()
 	return os.Getenv("MENU_SERVICE_PORT")
 }
+
+func EnvReviewServiceHost() string {
+	loadDotEnv()
+	return os.Getenv("REVIEW_SERVICE_HOST")
+}
+
+func EnvUserServiceHost() string {
+	loadDotEnv()
+	return os.Getenv("USER_SERVICE_HOST")
+}
+
+func EnvNotificationServiceHost() string {
+	loadDotEnv()
+	return os.Getenv("NOTIFICATION_SERVICE_HOST")
+}
+
+func EnvOrderServiceHost() string {
+	loadDotEnv()
+	return os.Getenv("ORDER_SERVICE_HOST")
+}
+
+func EnvMenuServiceHost() string {
+	loadDotEnv()
+	return os.Getenv("MENU_SERVICE_HOST")
+}

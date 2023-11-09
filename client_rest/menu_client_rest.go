@@ -43,14 +43,14 @@ type MenuClientRest interface {
 
 // menu ---------------------------------------------------------------------------------------------------------------------------------------
 func (s *MenuClient) GetAllMenus(canteenId, vendorId, minprice, maxprice string) ([]model.Menu, error) {
-	// path := configs.EnvHost() + ":" + configs.EnvMenuServicePort() + "/menus" + "?canteen=" + canteenName + "&vendor=" + vendorName + "&minprice=" + minprice + "&maxprice=" + maxprice
+	// path := configs.EnvMenuServiceHost() + ":" + configs.EnvMenuServicePort() + "/menus" + "?canteen=" + canteenName + "&vendor=" + vendorName + "&minprice=" + minprice + "&maxprice=" + maxprice
 	queryParams := url.Values{}
 	queryParams.Set("canteenId", canteenId)
 	queryParams.Set("vendorId", vendorId)
 	queryParams.Set("minprice", minprice)
 	queryParams.Set("maxprice", maxprice)
 
-	baseURL := configs.EnvHost() + ":" + configs.EnvMenuServicePort() + "/menus"
+	baseURL := configs.EnvMenuServiceHost() + ":" + configs.EnvMenuServicePort() + "/menus"
 
 	path := baseURL + "?" + queryParams.Encode()
 	// send request
@@ -70,7 +70,7 @@ func (s *MenuClient) GetAllMenus(canteenId, vendorId, minprice, maxprice string)
 }
 
 func (s *MenuClient) GetMenuByID(id string) (model.Menu, error) {
-	path := configs.EnvHost() + ":" + configs.EnvMenuServicePort() + "/menus/" + id
+	path := configs.EnvMenuServiceHost() + ":" + configs.EnvMenuServicePort() + "/menus/" + id
 	fmt.Println(path)
 	// send request
 	response, err := s.client.Get(path)
@@ -98,7 +98,7 @@ func (s *MenuClient) GetMenuByID(id string) (model.Menu, error) {
 }
 
 func (s *MenuClient) GetMenuByVendorID(vendorId string) ([]model.Menu, error) {
-	path := configs.EnvHost() + ":" + configs.EnvMenuServicePort() + "/menus/byVendor/" + vendorId
+	path := configs.EnvMenuServiceHost() + ":" + configs.EnvMenuServicePort() + "/menus/byVendor/" + vendorId
 	fmt.Println(path)
 	// send request
 	response, err := s.client.Get(path)
@@ -126,7 +126,7 @@ func (s *MenuClient) GetMenuByVendorID(vendorId string) ([]model.Menu, error) {
 }
 
 func (s *MenuClient) CreateMenu(Menu model.Menu) error {
-	path := configs.EnvHost() + ":" + configs.EnvMenuServicePort() + "/menus"
+	path := configs.EnvMenuServiceHost() + ":" + configs.EnvMenuServicePort() + "/menus"
 
 	//prepare request body
 	byteData, err := json.Marshal(Menu)
@@ -156,7 +156,7 @@ func (s *MenuClient) CreateMenu(Menu model.Menu) error {
 }
 
 func (s *MenuClient) UpdateMenuByID(id string, Menu model.Menu) error {
-	path := configs.EnvHost() + ":" + configs.EnvMenuServicePort() + "/menus/" + id
+	path := configs.EnvMenuServiceHost() + ":" + configs.EnvMenuServicePort() + "/menus/" + id
 
 	// prepare request body
 	byteData, err := json.Marshal(Menu)
@@ -188,7 +188,7 @@ func (s *MenuClient) UpdateMenuByID(id string, Menu model.Menu) error {
 }
 
 func (s *MenuClient) DeleteMenuByID(id string) error {
-	path := configs.EnvHost() + ":" + configs.EnvMenuServicePort() + "/menus/" + id
+	path := configs.EnvMenuServiceHost() + ":" + configs.EnvMenuServicePort() + "/menus/" + id
 
 	// send request
 	req, err := http.NewRequest(http.MethodDelete, path, nil)
@@ -214,7 +214,7 @@ func (s *MenuClient) DeleteMenuByID(id string) error {
 
 // vendor ---------------------------------------------------------------------------------------------------------------------------------------
 func (s *MenuClient) GetAllVendors() ([]model.Vendor, error) {
-	path := configs.EnvHost() + ":" + configs.EnvMenuServicePort() + "/vendors"
+	path := configs.EnvMenuServiceHost() + ":" + configs.EnvMenuServicePort() + "/vendors"
 
 	// send request
 	response, err := s.client.Get(path)
@@ -233,7 +233,7 @@ func (s *MenuClient) GetAllVendors() ([]model.Vendor, error) {
 }
 
 func (s *MenuClient) GetVendorByID(id string) (model.Vendor, error) {
-	path := configs.EnvHost() + ":" + configs.EnvMenuServicePort() + "/vendors/" + id
+	path := configs.EnvMenuServiceHost() + ":" + configs.EnvMenuServicePort() + "/vendors/" + id
 	fmt.Println(path)
 	// send request
 	response, err := s.client.Get(path)
@@ -271,7 +271,7 @@ func (s *MenuClient) GetVendorByID(id string) (model.Vendor, error) {
 }
 
 func (s *MenuClient) GetAllVendorsByCanteenID(id string) ([]model.Vendor, error) {
-	path := configs.EnvHost() + ":" + configs.EnvMenuServicePort() + "/vendors/canteens/" + id
+	path := configs.EnvMenuServiceHost() + ":" + configs.EnvMenuServicePort() + "/vendors/canteens/" + id
 	fmt.Println(path)
 	// send request
 	response, err := s.client.Get(path)
@@ -301,7 +301,7 @@ func (s *MenuClient) GetAllVendorsByCanteenID(id string) ([]model.Vendor, error)
 }
 
 func (s *MenuClient) CreateVendor(Menu model.Vendor) error {
-	path := configs.EnvHost() + ":" + configs.EnvMenuServicePort() + "/vendors"
+	path := configs.EnvMenuServiceHost() + ":" + configs.EnvMenuServicePort() + "/vendors"
 
 	//prepare request body
 	byteData, err := json.Marshal(Menu)
@@ -321,7 +321,7 @@ func (s *MenuClient) CreateVendor(Menu model.Vendor) error {
 }
 
 func (s *MenuClient) UpdateVendorByID(id string, Vendor model.Vendor) error {
-	path := configs.EnvHost() + ":" + configs.EnvMenuServicePort() + "/vendors/" + id
+	path := configs.EnvMenuServiceHost() + ":" + configs.EnvMenuServicePort() + "/vendors/" + id
 
 	// prepare request body
 	byteData, err := json.Marshal(Vendor)
@@ -353,7 +353,7 @@ func (s *MenuClient) UpdateVendorByID(id string, Vendor model.Vendor) error {
 }
 
 func (s *MenuClient) DeleteVendorByID(id string) error {
-	path := configs.EnvHost() + ":" + configs.EnvMenuServicePort() + "/vendors/" + id
+	path := configs.EnvMenuServiceHost() + ":" + configs.EnvMenuServicePort() + "/vendors/" + id
 
 	// send request
 	req, err := http.NewRequest(http.MethodDelete, path, nil)
@@ -379,7 +379,7 @@ func (s *MenuClient) DeleteVendorByID(id string) error {
 
 // canteen ---------------------------------------------------------------------------------------------------------------------------------------
 func (s *MenuClient) GetAllCanteens() ([]model.Canteen, error) {
-	path := configs.EnvHost() + ":" + configs.EnvMenuServicePort() + "/canteens"
+	path := configs.EnvMenuServiceHost() + ":" + configs.EnvMenuServicePort() + "/canteens"
 
 	// send request
 	response, err := s.client.Get(path)
@@ -398,7 +398,7 @@ func (s *MenuClient) GetAllCanteens() ([]model.Canteen, error) {
 }
 
 func (s *MenuClient) GetCanteenByID(id string) (model.Canteen, error) {
-	path := configs.EnvHost() + ":" + configs.EnvMenuServicePort() + "/canteens/" + id
+	path := configs.EnvMenuServiceHost() + ":" + configs.EnvMenuServicePort() + "/canteens/" + id
 	fmt.Println(path)
 	// send request
 	response, err := s.client.Get(path)
@@ -429,7 +429,7 @@ func (s *MenuClient) GetCanteenByID(id string) (model.Canteen, error) {
 }
 
 func (s *MenuClient) CreateCanteen(Menu model.Canteen) error {
-	path := configs.EnvHost() + ":" + configs.EnvMenuServicePort() + "/canteens"
+	path := configs.EnvMenuServiceHost() + ":" + configs.EnvMenuServicePort() + "/canteens"
 
 	//prepare request body
 	byteData, err := json.Marshal(Menu)
@@ -449,7 +449,7 @@ func (s *MenuClient) CreateCanteen(Menu model.Canteen) error {
 }
 
 func (s *MenuClient) UpdateCanteenByID(id string, Canteen model.Canteen) error {
-	path := configs.EnvHost() + ":" + configs.EnvMenuServicePort() + "/canteens/" + id
+	path := configs.EnvMenuServiceHost() + ":" + configs.EnvMenuServicePort() + "/canteens/" + id
 
 	// prepare request body
 	byteData, err := json.Marshal(Canteen)
@@ -481,7 +481,7 @@ func (s *MenuClient) UpdateCanteenByID(id string, Canteen model.Canteen) error {
 }
 
 func (s *MenuClient) DeleteCanteenByID(id string) error {
-	path := configs.EnvHost() + ":" + configs.EnvMenuServicePort() + "/canteens/" + id
+	path := configs.EnvMenuServiceHost() + ":" + configs.EnvMenuServicePort() + "/canteens/" + id
 
 	// send request
 	req, err := http.NewRequest(http.MethodDelete, path, nil)

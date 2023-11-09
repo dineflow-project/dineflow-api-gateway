@@ -22,7 +22,7 @@ type UserClientRest interface {
 }
 
 func (s *UserClient) GetMe() (model.User, error) {
-	path := configs.EnvHost() + ":" + configs.EnvUserServicePort() + "/api/users/me"
+	path := configs.EnvUserServiceHost() + ":" + configs.EnvUserServicePort() + "/api/users/me"
 
 	// send request
 	response, err := s.client.Get(path)
@@ -47,7 +47,7 @@ func (s *UserClient) GetMe() (model.User, error) {
 }
 
 func (s *UserClient) SignUp(user model.User) (model.User, error) {
-	path := configs.EnvHost() + ":" + configs.EnvUserServicePort() + "/api/auth/register"
+	path := configs.EnvUserServiceHost() + ":" + configs.EnvUserServicePort() + "/api/auth/register"
 
 	// prepare request body
 	byteData, err := json.Marshal(user)
@@ -77,7 +77,7 @@ func (s *UserClient) SignUp(user model.User) (model.User, error) {
 }
 
 func (s *UserClient) Login(user model.User) (model.User, error) {
-	path := configs.EnvHost() + ":" + configs.EnvUserServicePort() + "/api/auth/login"
+	path := configs.EnvUserServiceHost() + ":" + configs.EnvUserServicePort() + "/api/auth/login"
 
 	// prepare request body
 	byteData, err := json.Marshal(user)

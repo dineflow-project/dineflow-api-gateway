@@ -25,7 +25,7 @@ type ReviewClientRest interface {
 }
 
 func (s *ReviewClient) GetAllReviews() ([]model.Review, error) {
-	path := configs.EnvHost() + ":" + configs.EnvReviewServicePort() + "/reviews"
+	path := configs.EnvReviewServiceHost() + ":" + configs.EnvReviewServicePort() + "/reviews"
 
 	// send request
 	response, err := s.client.Get(path)
@@ -44,7 +44,7 @@ func (s *ReviewClient) GetAllReviews() ([]model.Review, error) {
 }
 
 func (s *ReviewClient) GetReviewByID(id string) (model.Review, error) {
-	path := configs.EnvHost() + ":" + configs.EnvReviewServicePort() + "/reviews/" + id
+	path := configs.EnvReviewServiceHost() + ":" + configs.EnvReviewServicePort() + "/reviews/" + id
 	fmt.Println(path)
 	// send request
 	response, err := s.client.Get(path)
@@ -72,7 +72,7 @@ func (s *ReviewClient) GetReviewByID(id string) (model.Review, error) {
 }
 
 func (s *ReviewClient) GetReviewByVendorID(vendorId string) ([]model.Review, error) {
-	path := configs.EnvHost() + ":" + configs.EnvReviewServicePort() + "/reviews/byVendor/" + vendorId
+	path := configs.EnvReviewServiceHost() + ":" + configs.EnvReviewServicePort() + "/reviews/byVendor/" + vendorId
 	fmt.Println(path)
 	// send request
 	response, err := s.client.Get(path)
@@ -100,7 +100,7 @@ func (s *ReviewClient) GetReviewByVendorID(vendorId string) ([]model.Review, err
 }
 
 func (s *ReviewClient) CreateReview(Review model.Review) error {
-	path := configs.EnvHost() + ":" + configs.EnvReviewServicePort() + "/reviews"
+	path := configs.EnvReviewServiceHost() + ":" + configs.EnvReviewServicePort() + "/reviews"
 
 	//prepare request body
 	byteData, err := json.Marshal(Review)
@@ -120,7 +120,7 @@ func (s *ReviewClient) CreateReview(Review model.Review) error {
 }
 
 func (s *ReviewClient) UpdateReviewByID(id string, Review model.Review) error {
-	path := configs.EnvHost() + ":" + configs.EnvReviewServicePort() + "/reviews/" + id
+	path := configs.EnvReviewServiceHost() + ":" + configs.EnvReviewServicePort() + "/reviews/" + id
 
 	// prepare request body
 	byteData, err := json.Marshal(Review)
@@ -152,7 +152,7 @@ func (s *ReviewClient) UpdateReviewByID(id string, Review model.Review) error {
 }
 
 func (s *ReviewClient) DeleteReviewByID(id string) error {
-	path := configs.EnvHost() + ":" + configs.EnvReviewServicePort() + "/reviews/" + id
+	path := configs.EnvReviewServiceHost() + ":" + configs.EnvReviewServicePort() + "/reviews/" + id
 
 	// send request
 	req, err := http.NewRequest(http.MethodDelete, path, nil)
