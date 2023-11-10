@@ -99,9 +99,11 @@ type Vendor struct {
 	OpeningTimestamp string `json:"opening_timestamp"`
 	ClosingTimestamp string `json:"closing_timestamp"`
 	Status           Status `json:"status"`
+	Image_path       string `json:"image_path"`
 }
 
 type Canteen struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
+	ID         int    `json:"id"`
+	Name       string `json:"name"`
+	Image_path string `json:"image_path"`
 }
