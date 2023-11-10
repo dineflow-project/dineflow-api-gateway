@@ -82,7 +82,7 @@ func (h *MenuHandler) CreateMenu(c *gin.Context) {
 		})
 		return
 	}
-	err := h.menuClientRest.CreateMenu(params)
+	menu, err := h.menuClientRest.CreateMenu(params)
 	if err != nil {
 		c.JSON(200, gin.H{
 			"code":  "500",
@@ -91,8 +91,8 @@ func (h *MenuHandler) CreateMenu(c *gin.Context) {
 		return
 	}
 	c.JSON(200, gin.H{
-		"code":    "200",
-		"message": "Menu created successfully",
+		"code": "200",
+		"data": menu,
 	})
 }
 

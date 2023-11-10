@@ -21,7 +21,7 @@ type MenuClientRest interface {
 	GetAllMenus(canteenName, vendorName, minprice, maxprice string) ([]model.Menu, error)
 	GetMenuByID(id string) (model.Menu, error)
 	GetMenuByVendorID(vendor_id string) ([]model.Menu, error)
-	CreateMenu(menu model.Menu) error
+	CreateMenu(menu model.Menu) (model.Menu, error)
 	UpdateMenuByID(id string, Menu model.Menu) error
 	DeleteMenuByID(id string) error
 
@@ -126,13 +126,13 @@ func (s *MenuClient) GetMenuByVendorID(vendorId string) ([]model.Menu, error) {
 	return resp, nil
 }
 
-func (s *MenuClient) CreateMenu(Menu model.Menu) error {
+func (s *MenuClient) CreateMenu(Menu model.Menu) (model.Menu, error) {
 	path := configs.EnvMenuServiceHost() + ":" + configs.EnvMenuServicePort() + "/menus"
 
 	//prepare request body
 	byteData, err := json.Marshal(Menu)
 	if err != nil {
-		return err
+		return model.Menu{}, err
 	}
 	bodyReader := bytes.NewReader(byteData)
 
@@ -140,7 +140,7 @@ func (s *MenuClient) CreateMenu(Menu model.Menu) error {
 	response, err := s.client.Post(path, "application/json", bodyReader)
 	fmt.Println(response)
 	if err != nil {
-		return err
+		return model.Menu{}, err
 	}
 	defer response.Body.Close()
 
@@ -148,12 +148,20 @@ func (s *MenuClient) CreateMenu(Menu model.Menu) error {
 		// Read the error response from the service
 		errorResponse, err := io.ReadAll(response.Body)
 		if err != nil {
-			return fmt.Errorf("failed to read error response: %s", err.Error())
+			return model.Menu{}, fmt.Errorf("failed to read error response: %s", err.Error())
 		}
 
-		return fmt.Errorf("HTTP Error: %s", string(errorResponse))
+		return model.Menu{}, fmt.Errorf("HTTP Error: %s", string(errorResponse))
 	}
-	return nil
+
+	// read response
+	var resp model.Menu
+	err = json.NewDecoder(response.Body).Decode(&resp)
+	if err != nil {
+		return model.Menu{}, err
+	}
+
+	return resp, nil
 }
 
 func (s *MenuClient) UpdateMenuByID(id string, Menu model.Menu) error {
