@@ -81,7 +81,7 @@ type Menu struct {
 	Price       float32 `json:"price"`
 	ImagePath   string  `json:"image_path"`
 	Description string  `json:"description"`
-	IsAvailable bool    `json:"is_available"`
+	IsAvailable int     `json:"is_available"`
 }
 
 type Status string
