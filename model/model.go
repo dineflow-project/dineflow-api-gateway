@@ -75,13 +75,13 @@ type ReviewResponseBody struct {
 // }
 
 type Menu struct {
-	ID          int     `json:"id"`
-	VendorID    int     `json:"vendor_id"`
-	Name        string  `json:"name"`
-	Price       float32 `json:"price"`
-	ImagePath   string  `json:"image_path"`
-	Description string  `json:"description"`
-	IsAvailable int     `json:"is_available"`
+	ID           int     `json:"id"`
+	VendorID     int     `json:"vendor_id"`
+	Name         string  `json:"name"`
+	Price        float32 `json:"price"`
+	Image_path   string  `json:"image_path"`
+	Description  string  `json:"description"`
+	Is_available string  `json:"is_available"`
 }
 
 type Status string
