@@ -1,0 +1,32 @@
+version: "3.7"
+
+services:
+  api-gateway:
+    container_name: api-gateway
+    build:
+      context: .
+      dockerfile: api.Dockerfile
+    ports:
+      - "8000:8000"
+    networks:
+      - api-gateway_network
+    env_file:
+      - ./.env
+
+  user_db:
+    container_name: "user_service_db"
+    image: mongo
+    networks:
+      - api-gateway_network
+    restart: on-failure
+    ports:
+      - "27018:27017"
+    env_file:
+      - ./.env
+    volumes:
+      - user_database:/data/db
+
+networks:
+  api-gateway_network:
+volumes:
+  user_database:
